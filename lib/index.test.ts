@@ -7,7 +7,7 @@ test('Exposes Id attribute', () => {
   const stack = new core.Stack(app, 'TestStack', {});
   const sub = new Subscription(stack, 'Sub', {
     apiKey: '{testApiKey}',
-    subscriptionJson: JSON.stringify({
+    subscription: {
       name: '{testSubscription}',
       customerId: '{testCustomerId}',
       region: 'us-east-1',
@@ -19,7 +19,7 @@ test('Exposes Id attribute', () => {
         protocol: 'http',
         url: 'https://example.com'
       }
-    })
+    }
   });
   expect(typeof sub.attrId).toEqual('string');
 });

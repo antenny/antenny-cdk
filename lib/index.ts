@@ -6,16 +6,29 @@ import * as logs from '@aws-cdk/aws-logs';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as cr from '@aws-cdk/custom-resources';
 
+export interface IResourceProps {
+  readonly protocol: string,
+  readonly url: string
+};
+
+export interface ISubscription {
+  readonly name: string,
+  readonly customerId: string,
+  readonly region: string,
+  readonly resource: IResourceProps,
+  readonly endpoint: IResourceProps
+};
+
 export interface ISubscriptionProps {
   readonly apiKey: string,
-  readonly subscriptionJson: string
+  readonly subscription: ISubscription
 };
 
 export class Subscription extends core.Construct {
   public attrId: string;
 
   constructor(scope: core.Construct, id: string,
-    props?: ISubscriptionProps) {
+    props: ISubscriptionProps) {
     super(scope, id);
     const subFnRole = new iam.Role(this, 'SubFnRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
@@ -46,9 +59,8 @@ export class Subscription extends core.Construct {
       serviceToken: subProv.serviceToken,
       pascalCaseProperties: true,
       properties: {
-        apiKey: props?.apiKey ?? '',
-        subcription: props?.subscriptionJson
-          ?? JSON.stringify({})
+        apiKey: props.apiKey,
+        subcription: JSON.stringify(props.subscription)
       }
     });
     this.attrId = subRes.getAttString('Id');
