@@ -5,10 +5,14 @@ import * as iam from '@aws-cdk/aws-iam';
 import * as logs from '@aws-cdk/aws-logs';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as cr from '@aws-cdk/custom-resources';
-import { ISubscriptionProps } from './i-subscription-props';
+
+export interface ISubscriptionProps {
+  readonly apiKey: string,
+  readonly subscriptionJson: string
+};
 
 export class Subscription extends core.Construct {
-  public id: string;
+  public attrId: string;
 
   constructor(scope: core.Construct, id: string,
     props?: ISubscriptionProps) {
@@ -42,10 +46,11 @@ export class Subscription extends core.Construct {
       serviceToken: subProv.serviceToken,
       pascalCaseProperties: true,
       properties: {
-        apiKey: props.apiKey,
-        subcription: JSON.stringify(props.subscription)
+        apiKey: props?.apiKey ?? '',
+        subcription: props?.subscriptionJson
+          ?? JSON.stringify({})
       }
     });
-    this.id = subRes.getAttString('id');
+    this.attrId = subRes.getAttString('Id');
   }
 }
