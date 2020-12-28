@@ -25,7 +25,7 @@ export interface ISubscriptionProps {
 };
 
 export class Subscription extends core.Construct {
-  public attrId: string;
+  public attrId: core.Reference;
 
   constructor(scope: core.Construct, id: string,
     props: ISubscriptionProps) {
@@ -49,7 +49,10 @@ export class Subscription extends core.Construct {
         __dirname,
         'function',
         'index.js'
-      ), { encoding: 'utf8' }))
+      ), { encoding: 'utf8' })),
+      environment: {
+        API_KEY: props.apiKey
+      }
     });
     const subProv = new cr.Provider(this, 'SubProvider', {
       onEventHandler: subFn,
@@ -59,10 +62,9 @@ export class Subscription extends core.Construct {
       serviceToken: subProv.serviceToken,
       pascalCaseProperties: true,
       properties: {
-        apiKey: props.apiKey,
-        subcription: JSON.stringify(props.subscription)
+        subscription: JSON.stringify(props.subscription)
       }
     });
-    this.attrId = subRes.getAttString('Id');
+    this.attrId = subRes.getAtt('Id');
   }
 }

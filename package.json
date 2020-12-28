@@ -8,6 +8,7 @@
     "build": "jsii --no-fix-peer-dependencies",
     "build:watch": "jsii -w",
     "package": "jsii-pacmak",
+    "compile": "tsc",
     "test": "tsc && jest --runInBand"
   },
   "author": "Jacob Breindel",
