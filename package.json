@@ -9,7 +9,7 @@
     "build:watch": "jsii -w",
     "package": "jsii-pacmak",
     "compile": "tsc",
-    "test": "tsc && jest --runInBand"
+    "test": "tsc --build tsconfig.json && jest --runInBand"
   },
   "author": "Jacob Breindel",
   "license": "MIT",
