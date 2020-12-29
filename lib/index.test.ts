@@ -1,5 +1,4 @@
 import *  as core from '@aws-cdk/core';
-import '@aws-cdk/assert/jest'
 import { Subscription } from '../lib/index';
 
 test('Exposes Id attribute', () => {
@@ -21,5 +20,5 @@ test('Exposes Id attribute', () => {
       }
     }
   });
-  expect(typeof sub.attrId).toEqual('string');
+  expect(typeof sub.attrId).toEqual('object');
 });
