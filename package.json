@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "jsii --no-fix-peer-dependencies",
+    "build": "jsii",
     "build:watch": "jsii -w",
     "package": "jsii-pacmak",
     "compile": "tsc",
@@ -21,24 +21,16 @@
     "outdir": "dist",
     "targets": {
       "python": {
-        "distName": "antenny-cdk.constructs",
-        "module": "antenny_cdk.constructs"
-      },
-      "java": {
-        "package": "io.antenny.cdk.constructs",
-        "maven": {
-          "groupId": "io.antenny.cdk",
-          "artifactId": "constructs"
-        }
+        "distName": "antenny-cdk",
+        "module": "antenny_cdk"
       },
       "dotnet": {
-        "namespace": "Antenny.Cdk.Constructs",
-        "packageId": "Antenny.Cdk.Constructs"
+        "namespace": "Antenny.Cdk",
+        "packageId": "Antenny.Cdk"
       }
     }
   },
   "dependencies": {
-    "@aws-cdk/assert": "^1.80.0",
     "@aws-cdk/aws-iam": "^1.80.0",
     "@aws-cdk/aws-lambda": "^1.80.0",
     "@aws-cdk/aws-logs": "^1.80.0",
