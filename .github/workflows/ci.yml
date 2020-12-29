@@ -1,0 +1,44 @@
+name: antenny-cdk ci
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Nodejs
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Test
+      run: npm test
+    - name: Version
+      id: version
+      run: |
+        version="$(jq -r '.version' package.json)"
+        echo "::set-output name=VERSION::$version"
+    - name: Publish
+      uses: udondan/jsii-publish@v0.12.0
+      with:
+        VERSION: ${{ steps.version.outputs.VERSION }}
+        BUILD_SOURCE: true
+        BUILD_PACKAGES: true
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NPM_OPTIONS: '--access public'
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+    - name: Release
+      id: release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.version.outputs.VERSION }}
+        release_name: Release ${{ steps.version.outputs.VERSION }}
+        draft: false
+        prerelease: false
