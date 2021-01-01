@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "lint": "eslint .",
     "build": "jsii",
     "build:watch": "jsii -w",
     "package": "jsii-pacmak",
@@ -35,7 +36,8 @@
     "@aws-cdk/aws-lambda": "^1.80.0",
     "@aws-cdk/aws-logs": "^1.80.0",
     "@aws-cdk/core": "^1.80.0",
-    "@aws-cdk/custom-resources": "^1.80.0"
+    "@aws-cdk/custom-resources": "^1.80.0",
+    "eslint": "^7.16.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.19",
