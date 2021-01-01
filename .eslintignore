@@ -1,6 +1,0 @@
-# Dependency directories
-node_modules/
-jspm_packages/
-cdk.out
-lib/*.js
-!lib/function/index.js
