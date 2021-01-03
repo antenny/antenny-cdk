@@ -6,17 +6,34 @@ import * as logs from '@aws-cdk/aws-logs';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as cr from '@aws-cdk/custom-resources';
 
-export interface IResourceProps {
+export interface IHeader {
+  readonly name: string,
+  readonly value: string
+};
+
+export interface IMessage {
+  readonly format: string,
+  readonly content: string
+}
+
+export interface IResource {
+  readonly protocol: string,
+  readonly url: string,
+  readonly headers?: IHeader[],
+  readonly messages?: IMessage[]
+};
+
+export interface IEndpoint {
   readonly protocol: string,
   readonly url: string
-};
+}
 
 export interface ISubscription {
   readonly name: string,
   readonly customerId: string,
   readonly region: string,
-  readonly resource: IResourceProps,
-  readonly endpoint: IResourceProps
+  readonly resource: IResource,
+  readonly endpoint: IEndpoint
 };
 
 export interface ISubscriptionProps {
